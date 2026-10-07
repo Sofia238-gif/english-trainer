@@ -1,0 +1,1342 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Trainer: Термины, Правила и Тесты с пояснениями</title>
+    <style>
+        :root {
+            --primary: #4a90e2;
+            --secondary: #50e3c2;
+            --accent: #ff7e67;
+            --bg: #f4f7f6;
+            --text: #333;
+            --white: #ffffff;
+            --error: #e74c3c;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --info: #3498db;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2.5rem 1rem 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        header h1 { margin: 0; font-size: 2.5rem; }
+        header p { opacity: 0.95; font-size: 1.1rem; margin-top: 0.5rem; }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            background: var(--white);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .tab-button {
+            background: none;
+            border: none;
+            padding: 1rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #777;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+            font-family: inherit;
+        }
+
+        .tab-button:hover { color: var(--primary); background-color: #f9f9f9; }
+        .tab-button.active { color: var(--primary); border-bottom-color: var(--primary); }
+
+        .container {
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .tab-content { display: none; animation: fadeIn 0.4s ease; }
+        .tab-content.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 1.5rem 2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 1.5rem;
+        }
+
+        h2 {
+            border-bottom: 2px solid var(--bg);
+            padding-bottom: 0.5rem;
+            margin-top: 0;
+            color: var(--primary);
+        }
+
+        h3 { color: var(--accent); margin-bottom: 0.5rem; }
+
+        /* Словарь */
+        .dictionary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+
+        .term-item {
+            padding: 1rem;
+            background: #f9f9f9;
+            border-left: 4px solid var(--secondary);
+            border-radius: 6px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .term-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+        }
+
+        .term-word {
+            font-weight: bold;
+            color: var(--primary);
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .term-def { font-size: 0.95rem; color: #555; }
+
+        /* Правила */
+        .rule-item {
+            background: #fafbfc;
+            border-radius: 10px;
+            padding: 1.2rem 1.5rem;
+            margin-bottom: 1.2rem;
+            border-left: 5px solid var(--primary);
+        }
+
+        .rule-item h3 {
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .rule-item h3 .icon { font-size: 1.3rem; }
+        .rule-text { margin-bottom: 0.8rem; }
+
+        .examples {
+            background: #fff;
+            border-radius: 6px;
+            padding: 0.8rem 1rem;
+            font-size: 0.95rem;
+            border: 1px dashed #ddd;
+        }
+
+        .examples strong { color: var(--primary); }
+        .examples ul { margin: 0.5rem 0 0 0; padding-left: 1.5rem; }
+        .examples li { margin-bottom: 0.3rem; }
+        .example-en { color: #2c3e50; font-style: italic; }
+        .example-ru { color: #7f8c8d; font-size: 0.9rem; }
+
+        .highlight {
+            background: linear-gradient(transparent 60%, #ffeaa7 60%);
+            font-weight: 600;
+        }
+
+        .mini-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .mini-table th, .mini-table td {
+            border: 1px solid #e0e0e0;
+            padding: 0.5rem 0.8rem;
+            text-align: left;
+        }
+
+        .mini-table th { background: #eef4fb; color: var(--primary); }
+        .mini-table tr:nth-child(even) { background: #fafbfc; }
+
+        /* ТЕСТЫ */
+        .quiz-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .category-card {
+            background: linear-gradient(135deg, #ffffff, #f8faff);
+            border: 2px solid #e8eef7;
+            border-radius: 12px;
+            padding: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .category-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(74, 144, 226, 0.15);
+            border-color: var(--primary);
+        }
+
+        .category-card.active {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, #eef4fb, #e0ecff);
+            box-shadow: 0 6px 18px rgba(74, 144, 226, 0.25);
+        }
+
+        .category-card .cat-icon { font-size: 2.2rem; display: block; margin-bottom: 0.4rem; }
+        .category-card .cat-name { font-weight: 700; color: var(--primary); font-size: 1.05rem; margin-bottom: 0.2rem; }
+        .category-card .cat-count { font-size: 0.85rem; color: #888; }
+        .category-card .cat-desc { font-size: 0.85rem; color: #666; margin-top: 0.4rem; line-height: 1.3; }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e8eef7;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 4px;
+        }
+
+        .question {
+            margin-bottom: 1.5rem;
+            padding: 1rem 1.2rem;
+            background: #f9f9f9;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .question p {
+            font-weight: 600;
+            margin: 0 0 0.8rem 0;
+        }
+
+        .options label {
+            display: block;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            padding: 0.6rem 0.8rem;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            background: #fff;
+            transition: all 0.2s;
+        }
+
+        .options label:hover {
+            background-color: #f0f8ff;
+            border-color: var(--primary);
+        }
+
+        input[type="radio"] {
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .btn-check {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.2s;
+            font-weight: bold;
+            font-family: inherit;
+            margin-bottom: 1rem;
+        }
+
+        .btn-check:hover { background-color: #357abd; }
+
+        .btn-secondary {
+            background-color: #95a5a6;
+            margin-top: 0;
+        }
+
+        .btn-secondary:hover { background-color: #7f8c8d; }
+
+        .btn-danger {
+            background-color: #e74c3c;
+        }
+
+        .btn-danger:hover { background-color: #c0392b; }
+
+        .btn-row {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-row .btn-check {
+            flex: 1;
+            min-width: 150px;
+            margin-bottom: 0;
+        }
+
+        #result {
+            margin-top: 1.2rem;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            min-height: 1px;
+        }
+
+        #result.success { background: #e8f8f5; color: var(--success); }
+        #result.warning { background: #fef5e7; color: var(--warning); }
+        #result.error { background: #fadbd8; color: var(--error); }
+
+        .correct-answer {
+            border-color: var(--success) !important;
+            background-color: #e8f8f5 !important;
+        }
+
+        .wrong-answer {
+            border-color: var(--error) !important;
+            background-color: #fadbd8 !important;
+        }
+
+        /* Блок пояснения */
+        .explanation {
+            margin-top: 1rem;
+            padding: 1rem 1.2rem;
+            background: linear-gradient(135deg, #eaf4fc, #f0f8ff);
+            border-left: 4px solid var(--info);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            color: #2c3e50;
+            animation: slideDown 0.3s ease;
+        }
+
+        .explanation .exp-title {
+            font-weight: 700;
+            color: var(--info);
+            margin-bottom: 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .explanation .exp-text {
+            line-height: 1.5;
+        }
+
+        .explanation .exp-rule {
+            display: inline-block;
+            background: #fff;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: var(--primary);
+            font-weight: 600;
+            margin: 0.2rem 0;
+        }
+
+        .explanation .exp-example {
+            display: block;
+            margin-top: 0.5rem;
+            padding: 0.5rem 0.8rem;
+            background: #fff;
+            border-radius: 6px;
+            border-left: 3px solid var(--secondary);
+            font-style: italic;
+            color: #34495e;
+        }
+
+        .explanation.hidden-exp { display: none; }
+
+        @keyframes slideDown {
+            from { opacity: 0; max-height: 0; }
+            to { opacity: 1; max-height: 500px; }
+        }
+
+        .hidden { display: none; }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: #888;
+        }
+
+        .empty-state .empty-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        /* Информационная плашка */
+        .info-banner {
+            background: linear-gradient(135deg, #fff9e6, #fffbf0);
+            border-left: 4px solid var(--warning);
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: #7d6608;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (max-width: 600px) {
+            header h1 { font-size: 1.8rem; }
+            .tab-button { padding: 0.8rem 0.8rem; font-size: 0.9rem; }
+            .card { padding: 1rem; }
+            .dictionary-grid { grid-template-columns: 1fr; }
+            .quiz-categories { grid-template-columns: 1fr 1fr; }
+            .btn-row { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>English Trainer</h1>
+    <p>Термины • Правила • Тесты с пояснениями</p>
+</header>
+
+<nav class="tabs">
+    <button class="tab-button active" onclick="switchTab('dictionary', this)">📚 Словарь</button>
+    <button class="tab-button" onclick="switchTab('rules', this)">📖 Правила</button>
+    <button class="tab-button" onclick="switchTab('quiz', this)">✍️ Тесты</button>
+</nav>
+
+<div class="container">
+
+    <!-- Словарь -->
+    <section id="dictionary" class="tab-content active">
+        <div class="card">
+            <h2>📚 Словарь терминов</h2>
+            <p>Основные грамматические понятия английского языка с определениями.</p>
+            <div id="dictionaryGrid" class="dictionary-grid"></div>
+        </div>
+    </section>
+
+    <!-- Правила -->
+    <section id="rules" class="tab-content">
+        <div class="card">
+            <h2>📖 Грамматические правила</h2>
+            <p>Ключевые правила английского языка с примерами и пояснениями.</p>
+            <div id="rulesContainer"></div>
+        </div>
+    </section>
+
+    <!-- ТЕСТЫ -->
+    <section id="quiz" class="tab-content">
+        <div class="card">
+            <h2>✍️ Тесты по английскому</h2>
+            <p>Выберите категорию и проверьте свои знания. Всего <strong>6 тестов</strong> и <strong>48 вопросов</strong>.</p>
+
+            <div class="info-banner">
+                💡 <strong>Совет:</strong> после проверки ответов под каждым вопросом появится <strong>пояснение</strong> с правилом. Используйте кнопку «Скрыть/показать пояснения» для управления.
+            </div>
+
+            <div class="quiz-categories" id="categoriesContainer"></div>
+
+            <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+            <div class="btn-row hidden" id="actionBtns">
+                <button class="btn-check btn-secondary" id="toggleExpBtn" onclick="toggleExplanations()">💡 Показать пояснения</button>
+                <button class="btn-check btn-danger" onclick="resetQuiz()">🔄 Сбросить тест</button>
+            </div>
+
+            <div id="quizContainer" style="margin-top:1.5rem;"></div>
+
+            <div id="emptyState" class="empty-state">
+                <span class="empty-icon">👆</span>
+                <p>Выберите категорию теста выше, чтобы начать</p>
+            </div>
+
+            <button class="btn-check hidden" id="checkBtn" onclick="checkAnswers()" style="margin-top:1rem;">✅ Проверить ответы</button>
+            <div id="result"></div>
+        </div>
+    </section>
+
+</div>
+
+<script>
+    /* ==========================================================
+       1. ТЕРМИНЫ
+       ========================================================== */
+    const terms = [
+        { word: "Noun", definition: "Имя существительное — часть речи, обозначающая предмет, лицо или явление." },
+        { word: "Verb", definition: "Глагол — часть речи, обозначающая действие или состояние." },
+        { word: "Adjective", definition: "Имя прилагательное — часть речи, обозначающая признак предмета." },
+        { word: "Adverb", definition: "Наречие — часть речи, обозначающая признак действия или качества." },
+        { word: "Pronoun", definition: "Местоимение — часть речи, указывающая на предмет, но не называющая его." },
+        { word: "Preposition", definition: "Предлог — служебная часть речи, выражающая отношения между словами." },
+        { word: "Conjunction", definition: "Союз — служебная часть речи, связывающая слова и предложения." },
+        { word: "Tense", definition: "Время — грамматическая категория, выражающая отношение действия к моменту речи." },
+        { word: "Passive Voice", definition: "Страдательный залог — форма глагола, показывающая, что действие направлено на подлежащее." },
+        { word: "Phrasal Verb", definition: "Фразовый глагол — сочетание глагола с предлогом или наречием, образующее новое значение." },
+        { word: "Article", definition: "Артикль — служебное слово, определяющее определённость или неопределённость существительного." },
+        { word: "Gerund", definition: "Герундий — неличная форма глагола с окончанием -ing, выполняющая функцию существительного." }
+    ];
+
+    /* ==========================================================
+       2. ПРАВИЛА
+       ========================================================== */
+    const rules = [
+        {
+            title: "Порядок слов в предложении",
+            icon: "🔤",
+            text: "В английском языке порядок слов строго фиксирован: <span class='highlight'>Подлежащее → Сказуемое → Дополнение → Обстоятельство</span>.",
+            examples: [
+                { en: "The cat eats fish.", ru: "Кошка ест рыбу." },
+                { en: "Fish eats the cat.", ru: "Рыба ест кошку. (другой смысл!)" }
+            ],
+            table: {
+                headers: ["Подлежащее", "Сказуемое", "Дополнение", "Обстоятельство"],
+                rows: [
+                    ["I", "love", "English", "very much."],
+                    ["She", "reads", "books", "every day."]
+                ]
+            }
+        },
+        {
+            title: "Времена группы Simple",
+            icon: "⏰",
+            text: "Simple (Present, Past, Future) используются для описания <span class='highlight'>регулярных действий, фактов и однократных событий</span>.",
+            examples: [
+                { en: "I go to school every day.", ru: "Present Simple — регулярное действие." },
+                { en: "She visited London last year.", ru: "Past Simple — однократное действие." },
+                { en: "They will come tomorrow.", ru: "Future Simple — будущее." }
+            ],
+            table: {
+                headers: ["Время", "Формула", "Пример"],
+                rows: [
+                    ["Present Simple", "V / V+s", "He plays football."],
+                    ["Past Simple", "V+ed / V2", "He played football."],
+                    ["Future Simple", "will + V", "He will play football."]
+                ]
+            }
+        },
+        {
+            title: "Артикли: a / an / the",
+            icon: "📌",
+            text: "Неопределённый артикль <span class='highlight'>a/an</span> — при первом упоминании. Определённый <span class='highlight'>the</span> — когда предмет уже известен.",
+            examples: [
+                { en: "I saw a dog. The dog was big.", ru: "Сначала 'a dog', затем 'the dog'." },
+                { en: "The sun rises in the east.", ru: "'The sun' — единственное в своём роде." }
+            ]
+        },
+        {
+            title: "Present Continuous",
+            icon: "🎬",
+            text: "Действие происходит <span class='highlight'>прямо сейчас</span>. Формула: <strong>am/is/are + V-ing</strong>.",
+            examples: [
+                { en: "I am reading a book now.", ru: "Я читаю книгу сейчас." },
+                { en: "They are playing football.", ru: "Они играют в футбол." }
+            ]
+        },
+        {
+            title: "Модальные глаголы",
+            icon: "💪",
+            text: "Can, must, should, may выражают <span class='highlight'>возможность, обязанность, совет или разрешение</span>.",
+            examples: [
+                { en: "I can swim.", ru: "Я умею плавать." },
+                { en: "You must study hard.", ru: "Ты должен учиться." },
+                { en: "She should see a doctor.", ru: "Ей следует к врачу." }
+            ]
+        },
+        {
+            title: "Степени сравнения",
+            icon: "📊",
+            text: "Короткие слова: <span class='highlight'>-er / -est</span>. Длинные: <span class='highlight'>more / the most</span>.",
+            examples: [
+                { en: "big → bigger → the biggest", ru: "большой → больше → самый большой" },
+                { en: "good → better → the best", ru: "Исключение" }
+            ]
+        },
+        {
+            title: "Passive Voice",
+            icon: "🔄",
+            text: "Когда важно действие, а не исполнитель. Формула: <strong>be + V3</strong>.",
+            examples: [
+                { en: "The letter was written yesterday.", ru: "Письмо было написано вчера." },
+                { en: "English is spoken all over the world.", ru: "На английском говорят везде." }
+            ]
+        }
+    ];
+
+    /* ==========================================================
+       3. ТЕСТЫ С ПОЯСНЕНИЯМИ
+       ========================================================== */
+    const quizzes = [
+        {
+            id: "terminology",
+            name: "Терминология",
+            icon: "📚",
+            desc: "Части речи и грамматические понятия",
+            questions: [
+                {
+                    question: "Что такое 'Noun'?",
+                    options: ["Глагол", "Существительное", "Прилагательное", "Наречие"],
+                    correct: 1,
+                    explanation: "Noun — это имя существительное. Обозначает предмет, лицо, место или явление.",
+                    rule: "Noun = существительное",
+                    example: "dog, cat, London, idea, love"
+                },
+                {
+                    question: "Какая часть речи описывает действие?",
+                    options: ["Adjective", "Adverb", "Verb", "Noun"],
+                    correct: 2,
+                    explanation: "Verb (глагол) обозначает действие или состояние предмета.",
+                    rule: "Verb = глагол (действие)",
+                    example: "run, jump, think, be, have"
+                },
+                {
+                    question: "Как переводится 'Adjective'?",
+                    options: ["Наречие", "Прилагательное", "Местоимение", "Предлог"],
+                    correct: 1,
+                    explanation: "Adjective — прилагательное. Описывает признак или качество предмета.",
+                    rule: "Adjective = прилагательное",
+                    example: "big, happy, red, beautiful"
+                },
+                {
+                    question: "Что такое 'Adverb'?",
+                    options: ["Наречие", "Союз", "Артикль", "Местоимение"],
+                    correct: 0,
+                    explanation: "Adverb — наречие. Описывает, как, когда, где или с какой частотой происходит действие. Часто образуется от прилагательных с помощью -ly.",
+                    rule: "Adverb = наречие",
+                    example: "quickly, very, well, always"
+                },
+                {
+                    question: "Какой частью речи является слово 'quickly'?",
+                    options: ["Adjective", "Adverb", "Noun", "Verb"],
+                    correct: 1,
+                    explanation: "Слово 'quickly' (быстро) оканчивается на -ly и описывает, как выполняется действие — это наречие (Adverb).",
+                    rule: "Adverb часто = Adjective + -ly",
+                    example: "quick → quickly, happy → happily"
+                },
+                {
+                    question: "Что такое 'Pronoun'?",
+                    options: ["Предлог", "Союз", "Местоимение", "Глагол"],
+                    correct: 2,
+                    explanation: "Pronoun — местоимение. Указывает на предмет, но не называет его.",
+                    rule: "Pronoun = местоимение",
+                    example: "I, you, he, she, it, we, they"
+                },
+                {
+                    question: "Как переводится 'Conjunction'?",
+                    options: ["Союз", "Предлог", "Артикль", "Наречие"],
+                    correct: 0,
+                    explanation: "Conjunction — союз. Связывает слова, фразы или предложения.",
+                    rule: "Conjunction = союз",
+                    example: "and, but, or, because, so"
+                },
+                {
+                    question: "Что такое 'Phrasal Verb'?",
+                    options: ["Глагол с -ing", "Сочетание глагола с предлогом/наречием", "Модальный глагол", "Глагол в прошедшем времени"],
+                    correct: 1,
+                    explanation: "Phrasal Verb — фразовый глагол. Состоит из глагола + предлог/наречие и часто имеет новое, идиоматическое значение.",
+                    rule: "Phrasal Verb = Verb + Preposition/Adverb",
+                    example: "give up (сдаваться), look after (заботиться)"
+                }
+            ]
+        },
+        {
+            id: "tenses",
+            name: "Времена",
+            icon: "⏰",
+            desc: "Simple, Continuous, Perfect",
+            questions: [
+                {
+                    question: "Какая формула у Present Simple?",
+                    options: ["V-ing", "V / V+s", "will + V", "have + V3"],
+                    correct: 1,
+                    explanation: "Present Simple использует базовую форму глагола (V). В 3-м лице ед. числа добавляется -s (V+s).",
+                    rule: "Present Simple: V / V+s",
+                    example: "I play. He plays."
+                },
+                {
+                    question: "Какая формула у Present Continuous?",
+                    options: ["V+ed", "am/is/are + V-ing", "will + V", "had + V3"],
+                    correct: 1,
+                    explanation: "Present Continuous образуется с помощью вспомогательного глагола am/is/are + основной глагол с -ing.",
+                    rule: "Present Continuous: am/is/are + V-ing",
+                    example: "I am reading. She is playing."
+                },
+                {
+                    question: "Как образуется Past Simple у правильных глаголов?",
+                    options: ["V-ing", "V+ed", "will + V", "have + V3"],
+                    correct: 1,
+                    explanation: "У правильных глаголов к базовой форме добавляется окончание -ed. Неправильные глаголы имеют особую форму (V2).",
+                    rule: "Past Simple (правильные): V+ed",
+                    example: "play → played, work → worked"
+                },
+                {
+                    question: "Какая формула у Future Simple?",
+                    options: ["V+ed", "am/is/are + V-ing", "will + V", "have + V3"],
+                    correct: 2,
+                    explanation: "Future Simple образуется с помощью вспомогательного глагола will + базовая форма глагола.",
+                    rule: "Future Simple: will + V",
+                    example: "I will go. She will come."
+                },
+                {
+                    question: "Выберите правильную форму: 'She ___ to school every day.'",
+                    options: ["go", "goes", "going", "gone"],
+                    correct: 1,
+                    explanation: "Это Present Simple. Подлежащее 'She' — 3-е лицо ед. числа, поэтому к глаголу добавляется -es (go → goes).",
+                    rule: "3-е лицо ед.ч. в Present Simple: V+s/es",
+                    example: "He goes. She watches."
+                },
+                {
+                    question: "Выберите правильную форму: 'They ___ football now.'",
+                    options: ["play", "plays", "are playing", "played"],
+                    correct: 2,
+                    explanation: "Слово 'now' (сейчас) указывает на Present Continuous. 'They' → are + playing.",
+                    rule: "Present Continuous: am/is/are + V-ing",
+                    example: "They are playing. We are studying."
+                },
+                {
+                    question: "Выберите правильную форму: 'I ___ London last year.'",
+                    options: ["visit", "visits", "visited", "will visit"],
+                    correct: 2,
+                    explanation: "Слово 'last year' (в прошлом году) указывает на Past Simple. Правильный глагол visit → visited.",
+                    rule: "Past Simple: V+ed (для правильных)",
+                    example: "I visited. She worked."
+                },
+                {
+                    question: "Выберите правильную форму: 'We ___ tomorrow.'",
+                    options: ["come", "came", "will come", "coming"],
+                    correct: 2,
+                    explanation: "Слово 'tomorrow' (завтра) указывает на Future Simple. Используем will + come.",
+                    rule: "Future Simple: will + V",
+                    example: "We will come. They will arrive."
+                },
+                {
+                    question: "Какое время используется для регулярных действий?",
+                    options: ["Present Continuous", "Present Simple", "Past Continuous", "Future Simple"],
+                    correct: 1,
+                    explanation: "Present Simple используется для регулярных, повторяющихся действий, привычек и фактов.",
+                    rule: "Present Simple = регулярные действия",
+                    example: "I always drink coffee in the morning."
+                }
+            ]
+        },
+        {
+            id: "articles",
+            name: "Артикли",
+            icon: "📌",
+            desc: "a, an, the и случаи их употребления",
+            questions: [
+                {
+                    question: "Какой артикль используется при первом упоминании предмета?",
+                    options: ["the", "a/an", "Не используется", "some"],
+                    correct: 1,
+                    explanation: "При первом упоминании предмета используется неопределённый артикль a/an. При повторном — определённый the.",
+                    rule: "1-е упоминание → a/an; далее → the",
+                    example: "I saw a cat. The cat was black."
+                },
+                {
+                    question: "Выберите правильный вариант: 'I saw ___ elephant.'",
+                    options: ["a", "an", "the", "—"],
+                    correct: 1,
+                    explanation: "Слово 'elephant' начинается с гласного звука [e], поэтому используется 'an'.",
+                    rule: "an — перед гласным звуком",
+                    example: "an apple, an egg, an hour"
+                },
+                {
+                    question: "Выберите правильный вариант: 'She is ___ engineer.'",
+                    options: ["a", "an", "the", "—"],
+                    correct: 1,
+                    explanation: "'Engineer' начинается с гласного звука [e], поэтому ставим 'an'. Профессии в английском всегда с артиклем.",
+                    rule: "an + профессия на гласный звук",
+                    example: "She is an engineer. He is a doctor."
+                },
+                {
+                    question: "Выберите правильный вариант: '___ sun rises in the east.'",
+                    options: ["A", "An", "The", "—"],
+                    correct: 2,
+                    explanation: "'The sun' — единственное в своём роде (как the moon, the sky, the earth). Поэтому используется определённый артикль.",
+                    rule: "the — единственное в своём роде",
+                    example: "the sun, the moon, the sky"
+                },
+                {
+                    question: "Когда используется 'the'?",
+                    options: ["При первом упоминании", "Когда предмет уже известен", "С любым существительным", "Только с именами"],
+                    correct: 1,
+                    explanation: "'The' используется, когда предмет уже известен собеседнику, упоминался ранее или единственный в своём роде.",
+                    rule: "the = конкретный, известный предмет",
+                    example: "The book you gave me is interesting."
+                },
+                {
+                    question: "Перед каким звуком ставится 'an'?",
+                    options: ["Перед согласным", "Перед гласным", "Перед любым", "Только перед 'h'"],
+                    correct: 1,
+                    explanation: "Артикль 'an' ставится перед словами, начинающимися с гласного ЗВУКА (a, e, i, o, u).",
+                    rule: "an + гласный звук",
+                    example: "an apple, an umbrella, an hour"
+                },
+                {
+                    question: "Выберите правильный вариант: 'This is ___ book. ___ book is interesting.'",
+                    options: ["a / A", "a / The", "the / A", "an / The"],
+                    correct: 1,
+                    explanation: "Первое упоминание — 'a book' (какая-то книга). Второе — 'The book' (та самая книга).",
+                    rule: "1-е упоминание → a/an, повторно → the",
+                    example: "I bought a car. The car is red."
+                }
+            ]
+        },
+        {
+            id: "modals",
+            name: "Модальные глаголы",
+            icon: "💪",
+            desc: "can, must, should, may",
+            questions: [
+                {
+                    question: "Какой глагол выражает способность?",
+                    options: ["must", "can", "should", "may"],
+                    correct: 1,
+                    explanation: "'Can' выражает способность, умение что-то делать.",
+                    rule: "can = умение, способность",
+                    example: "I can swim. She can speak English."
+                },
+                {
+                    question: "Какой глагол выражает обязанность?",
+                    options: ["can", "must", "may", "could"],
+                    correct: 1,
+                    explanation: "'Must' выражает строгую обязанность, долг или необходимость.",
+                    rule: "must = обязанность, долг",
+                    example: "You must wear a seatbelt."
+                },
+                {
+                    question: "Какой глагол выражает совет?",
+                    options: ["must", "should", "can", "may"],
+                    correct: 1,
+                    explanation: "'Should' используется для совета или рекомендации.",
+                    rule: "should = совет, рекомендация",
+                    example: "You should see a doctor."
+                },
+                {
+                    question: "Какой глагол выражает разрешение?",
+                    options: ["must", "should", "may", "can't"],
+                    correct: 2,
+                    explanation: "'May' используется для вежливого разрешения или формальной возможности.",
+                    rule: "may = разрешение",
+                    example: "May I come in?"
+                },
+                {
+                    question: "Что используется после модального глагола?",
+                    options: ["Глагол с 'to'", "Глагол с -ing", "Глагол без 'to'", "Глагол с -ed"],
+                    correct: 2,
+                    explanation: "После модальных глаголов используется инфинитив БЕЗ частицы 'to' (bare infinitive) и без окончания -s в 3-м лице.",
+                    rule: "Modal + V (без 'to', без -s)",
+                    example: "He can swim. (НЕ 'He can to swim')"
+                },
+                {
+                    question: "Переведите: 'Я умею плавать.'",
+                    options: ["I must swim.", "I can swim.", "I should swim.", "I may swim."],
+                    correct: 1,
+                    explanation: "'Умею' = способность, поэтому используем 'can'.",
+                    rule: "умею = can",
+                    example: "I can swim."
+                },
+                {
+                    question: "Переведите: 'Тебе следует отдохнуть.'",
+                    options: ["You can rest.", "You must rest.", "You should rest.", "You may rest."],
+                    correct: 2,
+                    explanation: "'Следует' = совет, поэтому используем 'should'.",
+                    rule: "следует = should",
+                    example: "You should rest."
+                }
+            ]
+        },
+        {
+            id: "comparatives",
+            name: "Степени сравнения",
+            icon: "📊",
+            desc: "Сравнительная и превосходная степени",
+            questions: [
+                {
+                    question: "Какая сравнительная степень у 'big'?",
+                    options: ["more big", "bigger", "biggest", "big more"],
+                    correct: 1,
+                    explanation: "'Big' — короткое прилагательное (1 слог), поэтому сравнительная степень образуется с -er. При этом конечная согласная удваивается: big → bigger.",
+                    rule: "короткие прил.: +er",
+                    example: "big → bigger, small → smaller"
+                },
+                {
+                    question: "Какая превосходная степень у 'big'?",
+                    options: ["the most big", "the bigger", "the biggest", "biggest more"],
+                    correct: 2,
+                    explanation: "Превосходная степень коротких прилагательных образуется с -est. Согласная удваивается: big → the biggest.",
+                    rule: "короткие прил.: the + ...est",
+                    example: "big → the biggest"
+                },
+                {
+                    question: "Какая сравнительная степень у 'beautiful'?",
+                    options: ["beautifuler", "more beautiful", "most beautiful", "beautifulest"],
+                    correct: 1,
+                    explanation: "'Beautiful' — длинное прилагательное (3+ слога), поэтому используется 'more' перед словом.",
+                    rule: "длинные прил.: more + adj",
+                    example: "beautiful → more beautiful"
+                },
+                {
+                    question: "Какая превосходная степень у 'good'?",
+                    options: ["goodest", "the most good", "the best", "better"],
+                    correct: 2,
+                    explanation: "'Good' — исключение. Формы: good → better → the best.",
+                    rule: "good → better → the best (исключение)",
+                    example: "She is the best student."
+                },
+                {
+                    question: "Какая сравнительная степень у 'good'?",
+                    options: ["gooder", "more good", "better", "best"],
+                    correct: 2,
+                    explanation: "'Good' — исключение. Сравнительная степень — 'better'.",
+                    rule: "good → better (исключение)",
+                    example: "This book is better than that one."
+                },
+                {
+                    question: "Какое слово-исключение имеет форму 'worse'?",
+                    options: ["well", "bad", "far", "little"],
+                    correct: 1,
+                    explanation: "'Bad' — исключение. Формы: bad → worse → the worst.",
+                    rule: "bad → worse → the worst",
+                    example: "The weather is worse today."
+                },
+                {
+                    question: "Выберите правильный вариант: 'She is ___ than her sister.'",
+                    options: ["tall", "taller", "tallest", "more tall"],
+                    correct: 1,
+                    explanation: "Слово 'than' указывает на сравнительную степень. 'Tall' — короткое слово, добавляем -er: taller.",
+                    rule: "than → сравнительная степень",
+                    example: "She is taller than her sister."
+                }
+            ]
+        },
+        {
+            id: "general",
+            name: "Общий тест",
+            icon: "🎯",
+            desc: "Всё вместе — комплексная проверка",
+            questions: [
+                {
+                    question: "Что такое 'Passive Voice'?",
+                    options: ["Активный залог", "Страдательный залог", "Будущее время", "Фразовый глагол"],
+                    correct: 1,
+                    explanation: "Passive Voice — страдательный залог. Используется, когда важно действие, а не тот, кто его выполняет.",
+                    rule: "Passive Voice = страдательный залог",
+                    example: "The letter was sent. (Письмо было отправлено.)"
+                },
+                {
+                    question: "Какая формула у Passive Voice?",
+                    options: ["be + V-ing", "be + V3", "have + V3", "will + V"],
+                    correct: 1,
+                    explanation: "Passive Voice образуется с помощью глагола 'be' в нужном времени + причастие прошедшего времени (V3).",
+                    rule: "be (в нужном времени) + V3",
+                    example: "is written, was built, will be done"
+                },
+                {
+                    question: "Какой порядок слов в английском предложении?",
+                    options: ["Сказуемое → Подлежащее → Дополнение", "Подлежащее → Сказуемое → Дополнение", "Дополнение → Подлежащее → Сказуемое", "Свободный"],
+                    correct: 1,
+                    explanation: "В английском языке фиксированный порядок слов: Подлежащее → Сказуемое → Дополнение → Обстоятельство.",
+                    rule: "S + V + O (+ Adv)",
+                    example: "I love English."
+                },
+                {
+                    question: "Что такое 'Gerund'?",
+                    options: ["Глагол в Past Simple", "Неличная форма глагола с -ing", "Модальный глагол", "Страдательный залог"],
+                    correct: 1,
+                    explanation: "Gerund — герундий. Неличная форма глагола с окончанием -ing, которая выполняет функцию существительного.",
+                    rule: "Gerund = V-ing (как существительное)",
+                    example: "Swimming is fun. I like reading."
+                },
+                {
+                    question: "Выберите правильный Passive: 'They built the house.'",
+                    options: ["The house built.", "The house was built.", "The house is build.", "The house builds."],
+                    correct: 1,
+                    explanation: "Исходное предложение в Past Simple. В Passive: 'be' в Past Simple (was) + V3 (built).",
+                    rule: "Past Simple Passive: was/were + V3",
+                    example: "The house was built."
+                },
+                {
+                    question: "Что такое 'Article'?",
+                    options: ["Глагол", "Служебное слово перед существительным", "Наречие", "Союз"],
+                    correct: 1,
+                    explanation: "Article — артикль. Служебное слово (a, an, the), которое ставится перед существительным.",
+                    rule: "Article = a / an / the",
+                    example: "a book, an apple, the sun"
+                },
+                {
+                    question: "Какое из слов — предлог?",
+                    options: ["and", "in", "quickly", "she"],
+                    correct: 1,
+                    explanation: "'In' — предлог (Preposition). Выражает отношение между словами (место, время, направление).",
+                    rule: "Preposition = предлог",
+                    example: "in, on, at, under, with"
+                },
+                {
+                    question: "Какое из слов — союз?",
+                    options: ["on", "and", "beautiful", "run"],
+                    correct: 1,
+                    explanation: "'And' — союз (Conjunction). Связывает слова или предложения.",
+                    rule: "Conjunction = союз",
+                    example: "and, but, or, because"
+                },
+                {
+                    question: "Какое из слов — наречие?",
+                    options: ["happy", "happily", "happiness", "happen"],
+                    correct: 1,
+                    explanation: "'Happily' — наречие (Adverb). Образовано от 'happy' с помощью -ly и описывает, как выполняется действие.",
+                    rule: "Adverb = Adj + -ly",
+                    example: "happy → happily, quick → quickly"
+                },
+                {
+                    question: "Выберите правильный вариант: 'She ___ English very well.'",
+                    options: ["speak", "speaks", "speaking", "spoken"],
+                    correct: 1,
+                    explanation: "Это Present Simple. Подлежащее 'She' — 3-е лицо ед. числа, поэтому добавляем -s: speak → speaks.",
+                    rule: "3-е лицо ед.ч.: V+s",
+                    example: "She speaks. He works."
+                }
+            ]
+        }
+    ];
+
+    /* ==========================================================
+       4. СОСТОЯНИЕ
+       ========================================================== */
+    let currentQuiz = null;
+    let answeredState = {};
+    let showExplanations = false;
+
+    /* ==========================================================
+       5. РЕНДЕРИНГ
+       ========================================================== */
+
+    function renderDictionary() {
+        const container = document.getElementById('dictionaryGrid');
+        container.innerHTML = '';
+        terms.forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'term-item';
+            div.innerHTML = `
+                <div class="term-word">${item.word}</div>
+                <div class="term-def">${item.definition}</div>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    function renderRules() {
+        const container = document.getElementById('rulesContainer');
+        container.innerHTML = '';
+        rules.forEach(rule => {
+            const div = document.createElement('div');
+            div.className = 'rule-item';
+
+            let examplesHtml = '';
+            if (rule.examples && rule.examples.length) {
+                examplesHtml = `
+                    <div class="examples">
+                        <strong>Примеры:</strong>
+                        <ul>
+                            ${rule.examples.map(ex => `
+                                <li>
+                                    <span class="example-en">${ex.en}</span><br>
+                                    <span class="example-ru">${ex.ru}</span>
+                                </li>
+                            `).join('')}
+                        </ul>
+                    </div>
+                `;
+            }
+
+            let tableHtml = '';
+            if (rule.table) {
+                tableHtml = `
+                    <table class="mini-table">
+                        <thead><tr>${rule.table.headers.map(h => `<th>${h}</th>`).join('')}</tr></thead>
+                        <tbody>
+                            ${rule.table.rows.map(row => `
+                                <tr>${row.map(cell => `<td>${cell}</td>`).join('')}</tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                `;
+            }
+
+            div.innerHTML = `
+                <h3><span class="icon">${rule.icon}</span> ${rule.title}</h3>
+                <div class="rule-text">${rule.text}</div>
+                ${tableHtml}
+                ${examplesHtml}
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    function renderCategories() {
+        const container = document.getElementById('categoriesContainer');
+        container.innerHTML = '';
+        quizzes.forEach(quiz => {
+            const card = document.createElement('div');
+            card.className = 'category-card';
+            card.dataset.quizId = quiz.id;
+
+            const state = answeredState[quiz.id];
+            let badge = '';
+            if (state) {
+                const percent = Math.round((state.score / state.total) * 100);
+                badge = `<div class="cat-count" style="color:var(--success);font-weight:600;">✅ ${state.score}/${state.total} (${percent}%)</div>`;
+            } else {
+                badge = `<div class="cat-count">${quiz.questions.length} вопросов</div>`;
+            }
+
+            card.innerHTML = `
+                <span class="cat-icon">${quiz.icon}</span>
+                <div class="cat-name">${quiz.name}</div>
+                ${badge}
+                <div class="cat-desc">${quiz.desc}</div>
+            `;
+            card.onclick = () => selectQuiz(quiz.id);
+            container.appendChild(card);
+        });
+    }
+
+    function renderQuizQuestions(quiz) {
+        const container = document.getElementById('quizContainer');
+        container.innerHTML = '';
+
+        quiz.questions.forEach((q, index) => {
+            const qDiv = document.createElement('div');
+            qDiv.className = 'question';
+            qDiv.id = `question-${index}`;
+
+            let optionsHtml = '';
+            q.options.forEach((opt, optIndex) => {
+                optionsHtml += `
+                    <label id="label-${index}-${optIndex}">
+                        <input type="radio" name="q${index}" value="${optIndex}" onchange="updateProgress()">
+                        ${opt}
+                    </label>
+                `;
+            });
+
+            // Блок пояснения (скрыт по умолчанию)
+            const explanationHtml = `
+                <div class="explanation hidden-exp" id="exp-${index}">
+                    <div class="exp-title">💡 Пояснение</div>
+                    <div class="exp-text">
+                        ${q.explanation}
+                        <div style="margin-top:0.6rem;">
+                            <span class="exp-rule">📐 ${q.rule}</span>
+                        </div>
+                        <span class="exp-example">✏️ Пример: ${q.example}</span>
+                    </div>
+                </div>
+            `;
+
+            qDiv.innerHTML = `
+                <p>${index + 1}. ${q.question}</p>
+                <div class="options">${optionsHtml}</div>
+                ${explanationHtml}
+            `;
+            container.appendChild(qDiv);
+        });
+    }
+
+    /* ==========================================================
+       6. ЛОГИКА ТЕСТОВ
+       ========================================================== */
+
+    function selectQuiz(quizId) {
+        document.querySelectorAll('.category-card').forEach(c => {
+            c.classList.toggle('active', c.dataset.quizId === quizId);
+        });
+
+        currentQuiz = quizzes.find(q => q.id === quizId);
+        showExplanations = false;
+
+        document.getElementById('emptyState').classList.add('hidden');
+        document.getElementById('checkBtn').classList.remove('hidden');
+        document.getElementById('actionBtns').classList.remove('hidden');
+
+        const resultDiv = document.getElementById('result');
+        resultDiv.className = '';
+        resultDiv.innerHTML = '';
+
+        renderQuizQuestions(currentQuiz);
+        updateProgress();
+        updateToggleBtn();
+
+        document.getElementById('quizContainer').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function updateProgress() {
+        if (!currentQuiz) return;
+        const total = currentQuiz.questions.length;
+        let answered = 0;
+        currentQuiz.questions.forEach((q, index) => {
+            if (document.querySelector(`input[name="q${index}"]:checked`)) answered++;
+        });
+        const percent = (answered / total) * 100;
+        document.getElementById('progressFill').style.width = percent + '%';
+    }
+
+    function checkAnswers() {
+        if (!currentQuiz) return;
+
+        let score = 0;
+        const total = currentQuiz.questions.length;
+        const resultDiv = document.getElementById('result');
+
+        document.querySelectorAll('.options label').forEach(label => {
+            label.classList.remove('correct-answer', 'wrong-answer');
+        });
+
+        currentQuiz.questions.forEach((q, index) => {
+            const selected = document.querySelector(`input[name="q${index}"]:checked`);
+            const correctLabel = document.getElementById(`label-${index}-${q.correct}`);
+            if (correctLabel) correctLabel.classList.add('correct-answer');
+
+            if (selected) {
+                const value = parseInt(selected.value);
+                if (value === q.correct) {
+                    score++;
+                } else {
+                    const wrongLabel = document.getElementById(`label-${index}-${value}`);
+                    if (wrongLabel) wrongLabel.classList.add('wrong-answer');
+                }
+            }
+        });
+
+        answeredState[currentQuiz.id] = { score, total };
+
+        // Автоматически показываем пояснения после проверки
+        showExplanations = true;
+        updateExplanationsVisibility();
+        updateToggleBtn();
+
+        renderCategories();
+        document.querySelectorAll('.category-card').forEach(c => {
+            c.classList.toggle('active', c.dataset.quizId === currentQuiz.id);
+        });
+
+        const percent = Math.round((score / total) * 100);
+        resultDiv.className = '';
+        if (score === total) {
+            resultDiv.classList.add('success');
+            resultDiv.innerHTML = `🎉 Отлично! ${score} из ${total} (100%). Идеальный результат!`;
+        } else if (percent >= 70) {
+            resultDiv.classList.add('warning');
+            resultDiv.innerHTML = `👍 Хорошо! ${score} из ${total} (${percent}%). Есть небольшие пробелы.`;
+        } else if (percent >= 40) {
+            resultDiv.classList.add('warning');
+            resultDiv.innerHTML = `🤔 Средне. ${score} из ${total} (${percent}%). Стоит повторить материал.`;
+        } else {
+            resultDiv.classList.add('error');
+            resultDiv.innerHTML = `📚 ${score} из ${total} (${percent}%). Рекомендуем изучить правила заново.`;
+        }
+
+        resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function toggleExplanations() {
+        showExplanations = !showExplanations;
+        updateExplanationsVisibility();
+        updateToggleBtn();
+    }
+
+    function updateExplanationsVisibility() {
+        document.querySelectorAll('.explanation').forEach(exp => {
+            exp.classList.toggle('hidden-exp', !showExplanations);
+        });
+    }
+
+    function updateToggleBtn() {
+        const btn = document.getElementById('toggleExpBtn');
+        if (showExplanations) {
+            btn.innerHTML = '🙈 Скрыть пояснения';
+        } else {
+            btn.innerHTML = '💡 Показать пояснения';
+        }
+    }
+
+    function resetQuiz() {
+        if (!currentQuiz) return;
+        document.querySelectorAll('#quizContainer input[type="radio"]').forEach(input => {
+            input.checked = false;
+        });
+        document.querySelectorAll('.options label').forEach(label => {
+            label.classList.remove('correct-answer', 'wrong-answer');
+        });
+        const resultDiv = document.getElementById('result');
+        resultDiv.className = '';
+        resultDiv.innerHTML = '';
+
+        showExplanations = false;
+        updateExplanationsVisibility();
+        updateToggleBtn();
+
+        delete answeredState[currentQuiz.id];
+        renderCategories();
+        document.querySelectorAll('.category-card').forEach(c => {
+            c.classList.toggle('active', c.dataset.quizId === currentQuiz.id);
+        });
+
+        updateProgress();
+    }
+
+    /* ==========================================================
+       7. ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК
+       ========================================================== */
+    function switchTab(tabId, button) {
+        document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+        document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        button.classList.add('active');
+    }
+
+    /* ==========================================================
+       8. ИНИЦИАЛИЗАЦИЯ
+       ========================================================== */
+    window.onload = () => {
+        renderDictionary();
+        renderRules();
+        renderCategories();
+    };
+</script>
+
+</body>
+</html>
+git remote add origin https://github.com/Sofia238-gif/english-trainer.git
+git branch -M main
+git push -u origin main
